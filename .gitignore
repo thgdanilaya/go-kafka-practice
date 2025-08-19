@@ -23,3 +23,5 @@ Thumbs.db
 **/.dockerignore
 docker-compose.override.yml
 .migrate
+.idea
+.gitignore

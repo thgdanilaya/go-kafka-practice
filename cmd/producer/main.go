@@ -35,11 +35,11 @@ func main() {
 	defer writer.Close()
 
 	order := model.Order{
-		OrderUID:    "testiasd,apsd,pa,s",
+		OrderUID:    "livetest",
 		TrackNumber: "WBILMTESTTRACK",
 		Entry:       "WBIL",
 		Delivery:    model.Delivery{"Test Testov", "+9720000000", "2639809", "Kiryat Mozkin", "Ploshad Mira 15", "Kraiot", "test@gmail.com"},
-		Payment:     model.Payment{"testiasd,apsd,pa,s", "", "USD", "wbpay", 1817, 1637907727, "alpha", 1500, 317, 0},
+		Payment:     model.Payment{"livetest", "", "USD", "wbpay", 1817, 1637907727, "alpha", 1500, 317, 0},
 		Items: []model.Item{
 			{ChrtID: 9934930, TrackNumber: "WBILMTESTTRACK", Price: 453, RID: "ab4219087a764ae0btest", Name: "Mascaras", Sale: 30, Size: "0", TotalPrice: 317, NmID: 2389212, Brand: "Vivienne Sabo", Status: 202},
 		},
