@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8"/>
+    <title>Поиск заказа</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <style>
+        body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, sans-serif; margin: 2rem; }
+        input, button { font-size: 16px; padding: 8px 12px; }
+        pre { background: #f6f8fa; padding: 12px; border-radius: 8px; overflow: auto; }
+    </style>
+</head>
+<body>
+<h1>Поиск заказа</h1>
+<input id="oid" placeholder="order_uid" size="40"/>
+<button id="btn">Поиск</button>
+<pre id="out">Введите order_uid и нажмите "Поиск"</pre>
+<script>
+    const out = document.getElementById('out');
+    document.getElementById('btn').onclick = async () => {
+        const id = document.getElementById('oid').value.trim();
+        if (!id) return;
+        out.textContent = 'Загружаю...';
+
+        const t0 = performance.now();
+        try {
+            const res = await fetch('/api/orders/' + encodeURIComponent(id));
+            const t1 = performance.now();
+            const txt = await res.text();
+            let body;
+            try { body = JSON.parse(txt); } catch { body = txt; }
+
+            const xcache = res.headers.get('Cache') || 'N/A';
+            const timing = res.headers.get('Server-Timing') || 'N/A';
+            const elapsed = (t1 - t0).toFixed(1) + ' ms';
+
+            out.textContent =
+                `Cache: ${xcache}\nServer-Timing: ${timing}\nElapsed: ${elapsed}\n\n` +
+                (typeof body === 'string' ? body : JSON.stringify(body, null, 2));
+        } catch (e) {
+            out.textContent = 'Ошибка: ' + e.message;
+        }
+    }
+</script>
+</body>
+</html>
